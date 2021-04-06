@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+    <ui:composition template="/publico/templates/principal.xhtml">
+        <ui:define name="titulo">
+            #{msgs.PageTitle}
+        </ui:define>
+        <ui:define name="corpo">      
+            <h:form>  
+
+                <p:panelGrid id="cadastro" columns="2" style=" width: 770px;" styleClass="semBorda"
+                             columnClasses="rotulo, campo"> 
+
+                    <f:facet name="header">
+                        Agendamento
+                    </f:facet>
+                    <h:outputLabel value="Numero da Os:"/>
+                    <h:outputLabel value="#{agendaBean.agenda.codigo}" style="color: red; font-weight:bold;"/>
+
+
+                    <h:outputLabel for="accliente" value="Cliente:"/> 
+                    <p:selectOneMenu id="accliente" value="#{agendaBean.agenda.clienteagenda}" >
+                        <f:selectItem itemLabel="Selecione um Cliente" itemValue="" /> 
+                        <f:selectItems value="#{clienteBean.listarClientes}"
+                                       var="cli" 
+                                       itemLabel="#{cli.nomeFantasia}"
+                                       itemValue="#{cli}"/>
+                    </p:selectOneMenu>
+
+
+
+                    <h:outputLabel for="acresponsavel" value="Responsavel:"/>
+                    <p:selectOneMenu id="acresponsavel" value="#{agendaBean.agenda.usuarioagenda}">
+                        <f:selectItem itemLabel="Selecione um Responsavel" itemValue="" /> 
+                        <f:selectItems value="#{usuarioBean.usuarios}"
+                                       var="user" 
+                                       itemLabel="#{user.login}"
+                                       itemValue="#{user}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="Dinicio" value="Data Inicio:" />  
+                    <p:calendar id="Dinicio" value="#{agendaBean.agenda.dataInicio}" pattern="dd/MM/yyyy">  
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" /> 
+                    </p:calendar>
+
+
+                    <h:outputLabel for="Hinicio" value="Hora Inicio:" />                     
+                    <p:calendar id="Hinicio" value="#{agendaBean.agenda.horaInicio}" pattern="HH:mm" timeOnly="true"  
+                                navigator="true" locale="pt_BR" />
+
+
+
+                    <h:outputLabel for="problema" value="Problema:" />  
+                    <p:inputTextarea id="problema" rows="6" cols="33" value="#{agendaBean.agenda.problema}" onkeyup="up(this)"/>
+
+
+
+
+                    <f:facet name="footer"> 
+
+                        <p:commandButton action="#{agendaBean.prepararAdicionarAgenda()}" ajax="false"
+                                         value="Novo"  style="margin:0"/> 
+
+                        <p:commandButton   action="#{agendaBean.adicionarAgenda()}" ajax="false"
+                                           value="Gravar" style="margin:0" 
+                                           rendered="#{agendaBean.agenda.status == null }"/>
+                                          <!-- rendered="#{agendaBean.agenda.status eq 'ESPERA' || agendaBean.agenda.status == null }"/> -->
+
+                        <p:commandButton  action="#{agendaBean.relatorio_protocolo(agendaBean.agenda.codigo)}" ajax="false"
+                                          value="Imprimir" style="margin:0"
+                                          rendered="#{agendaBean.agenda.data_hora_usuarioimpresao eq null}"/> 
+
+
+                    </f:facet> 
+
+                    <sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
+                        <p:commandButton  action="#{agendaBean.relatorio_protocolo(agendaBean.agenda.codigo)}" ajax="false"
+                                          value="Reimpressão Administrativa" style="margin:0"/>
+                    </sec:ifAnyGranted>
+
+                </p:panelGrid> 
+
+
+
+
+
+
+
+
+
+                <!--  Componentes invisiveis-->
+
+                <h:inputText id="controle" value="#{agendaBean.agenda.controle}"  style=" display: none" />
+                <h:inputText id="codigo" value="#{agendaBean.agenda.codigo}"  style=" display: none" />
+                <h:inputText id="status" value="#{agendaBean.agenda.status}"  style=" display: none" />
+                <h:inputText id="usuarioagendamento" value="#{agendaBean.agenda.usuarioagendamento}"  style=" display: none" />
+                <h:inputText id="usuariofechamento" value="#{agendaBean.agenda.usuariofechamento}"  style=" display: none" />
+                <h:inputText id="usuariocontato" value="#{agendaBean.agenda.usuariocontato}"  style=" display: none" />
+                <h:inputText id="usuarioimpressao" value="#{agendaBean.agenda.usuarioimpresao}"  style=" display: none" />    
+
+                <p:panelGrid columns="4" style=" width: 770px;"
+                             styleClass="semBorda"
+                             columnClasses="rotulo, campo">
+                    <!-- --> 
+                    <h:outputLabel value="Responsavel pela Impressão: "/>
+                    <p:outputLabel value="#{agendaBean.agenda.usuarioimpresao}" style="color: red; font-weight:bold;"/>
+
+                    <!-- --> 
+                    <h:outputLabel value="Data e Hora da Impressão: "/>
+                    <p:calendar  id="data_hora_usuarioimpressao" value="#{agendaBean.agenda.data_hora_usuarioimpresao}"  pattern="dd/MM/yyyy HH:mm:ss"/>
+
+
+                    <h:outputLabel value="Responsavel pelo Agendamento: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuarioagendamento}" style="color: red; font-weight:bold;"/>
+                    <h:outputLabel value="Data e Hora do Agendamento: "/>
+                    <p:calendar  id="data_hora_usuarioagendamento" value="#{agendaBean.agenda.data_hora_usuarioagendamento}"  pattern="dd/MM/yyyy HH:mm:ss"/>
+
+                    <h:outputLabel value="Responsavel pelo Fechamento: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuariofechamento}" style="color: red; font-weight:bold;"/> 
+                    <h:outputLabel value="Data e Hora do Fechamento: "/>
+                    <p:calendar  id="data_hora_usuariofechamento" value="#{agendaBean.agenda.data_hora_usuariofechamento}"  pattern="dd/MM/yyyy HH:mm:ss"/>
+
+                    <h:outputLabel value="Responsavel pelo Contato: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuariocontato}" style="color: red; font-weight:bold;"/>
+                    <h:outputLabel value="Data e Hora do Contato: "/>
+                    <p:calendar  id="data_hora_usuariocotato" value="#{agendaBean.agenda.data_hora_usuariocontato}"  pattern="dd/MM/yyyy HH:mm:ss" />
+
+                    <h:outputLabel value="Responsavel pelo Protocolo: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuarioprotocolo}" style="color: red; font-weight:bold;"/>
+                    <h:outputLabel value="Data e Hora do Protocolo: "/>
+                    <p:calendar  id="data_hora_protocolo" value="#{agendaBean.agenda.data_hora_usuarioprotocolo}"   pattern="dd/MM/yyyy HH:mm:ss"/>
+
+                </p:panelGrid>
+
+
+
+
+                <p:dataTable value="#{agendaBean.listaEsperas}" var="agenda" rowKey="#{agenda.codigo}" 
+                             selectionMode="single" style="height: 390px; width: 770px;" id="tabela" paginator="true" 
+                             rows="10">
+
+                    <p:column headerText="Os">
+                        <h:outputText value="#{agenda.codigo}" />
+                    </p:column>
+                    <p:column headerText="Data"> 
+                        <h:outputText value="#{agenda.dataInicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Hora">
+                        <h:outputText value="#{agenda.horaInicio}">
+                            <f:convertDateTime pattern="HH:mm" type="time" 
+                                               dateStyle="short" timeZone="GMT-3" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{agenda.clienteagenda.nomeFantasia}" />
+                    </p:column>
+                    <p:column headerText="Responsavel">
+                        <h:outputText value="#{agenda.usuarioagenda.login}" />
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{agenda.status}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                       
+                            <h:commandLink action="#{agendaBean.prepararAlterarAgenda()}" >
+                                <h:graphicImage library="imagens" name="editar16.png"/>
+                                <f:setPropertyActionListener target="#{agendaBean.agenda}" value="#{agenda}" />
+                            </h:commandLink>
+
+                      <sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
+                            <h:commandLink action="#{agendaBean.excluirAgenda()}"
+                                           onclick="if (!confirm('Confirma a exclusão do Agendamento da Os #{agenda.codigo}?'))
+                                                       return false;">
+                                <h:graphicImage library="imagens" name="excluir16.png" />
+                                <f:setPropertyActionListener target="#{agendaBean.agenda}" value="#{agenda}"/>
+                            </h:commandLink>
+                        </sec:ifAnyGranted>
+
+
+                    </p:column>
+                </p:dataTable>
+
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+</html>

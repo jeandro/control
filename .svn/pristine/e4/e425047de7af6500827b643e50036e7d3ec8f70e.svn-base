@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <title><ui:insert name="titulo">#{msgs.PageTitle}</ui:insert></title>
+        <h:outputStylesheet library="css" name="estilo.css"/> 
+        <style type="text/css"><!--
+            #logotipo {
+                text-align: center;
+            } -->
+        </style>
+
+    </h:head>
+    <h:body>
+        <div id="container">
+            <div id="logotipo" align="center">
+                <h:graphicImage library="imagens" name="logotipo_g.png"/>
+
+                <br />
+
+            </div>
+
+            <div align="right" style="font-size: 10px">
+                <a> Usuário Logado:  </a>
+                <h:outputLabel value="#{request.remoteUser}" style="color: red; font-weight:bold;"/>
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <a style=" font-weight: bold" href="#{request.contextPath}/j_spring_security_logout">Sair</a>
+            </div>
+
+            <div id="barra_menu" style="font-size: 10px">
+                <ui:insert name="barra_menu">
+                    <ui:include src="/publico/menu_sistema.xhtml"/>
+                </ui:insert>   
+            </div>
+            <div id="corpo" style="font-size: 10px">
+                <ui:insert name="corpo"/>  
+                <h:outputScript name="locale-primefaces.js" library="js"></h:outputScript>
+                <h:outputScript name="maiusculo-minusculo.js" library="js"></h:outputScript>
+                <p:growl autoUpdate="true"></p:growl>
+              
+            </div>
+            <div id="rodape" style="font-size: 10px">
+                 <span></span>
+                <span></span>
+                <p:panel style="text-align: center; border: none !important;"> 
+                    <f:facet name="header">
+                        #{msgs.PageTitle}
+                    </f:facet> 
+                </p:panel>                   
+
+            </div>
+        </div>
+    </h:body>
+</html>

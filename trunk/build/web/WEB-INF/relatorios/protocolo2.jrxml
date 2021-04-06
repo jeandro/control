@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="protocolo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e61afdd-7831-4249-805f-7f372d3fadac">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="478"/>
+	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
+	<subDataset name="dataset1" uuid="d0277ac5-299f-402e-8a85-73889e1e786c"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="datacontato" class="java.sql.Date"/>
+	<field name="datafim" class="java.sql.Date"/>
+	<field name="datainicio" class="java.sql.Date"/>
+	<field name="horacontato" class="java.sql.Time"/>
+	<field name="horafim" class="java.sql.Time"/>
+	<field name="problema" class="java.lang.String"/>
+	<field name="nomefantasia" class="java.lang.String"/>
+	<field name="telefone" class="java.lang.String"/>
+	<field name="login" class="java.lang.String"/>
+	<field name="horainicio" class="java.sql.Time"/>
+	<field name="usuarioagendamento" class="java.lang.String"/>
+	<title>
+		<band height="80" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="1" y="0" width="553" height="73" uuid="e06f88cd-1d47-4fdc-9e51-27fc5962a09a"/>
+			</rectangle>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="295" y="0" width="238" height="20" uuid="3684fda4-8ef1-4c8a-8a84-ac2234e9253f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="1" y="0" width="155" height="55" uuid="f6ad6830-14d7-4d91-8bf7-1222ed2398e5"/>
+				<imageExpression><![CDATA["D:\\Projetos JEE\\Control\\trunk\\web\\resources\\imagens\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="156" y="20" width="307" height="36" uuid="98fa1c0c-eb0c-444a-9b3d-539770ffd725"/>
+				<textElement verticalAlignment="Top">
+					<font size="24" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Protocolo de Atendimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="45" width="33" height="28" uuid="07fba0e8-bd35-42a5-912a-ba91b0107e16"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Os:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="496" y="45" width="41" height="20" uuid="de039bcb-803f-4fb4-a6a6-4cb623995ad7"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="651" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="1" y="449" width="554" height="79" uuid="314395fd-3b44-4e57-b288-abbc1e110c3a"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="554" height="84" uuid="f5d9186c-a37a-4e5e-97b3-d2e0fa1e3a8d"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="12" y="20" width="100" height="20" uuid="0d413db6-fd4d-43b5-93a5-15a9b82e6149"/>
+				<textFieldExpression><![CDATA[$F{datacontato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="0" width="100" height="20" uuid="d346efaa-2c0c-4438-afb1-26921b7e538e"/>
+				<text><![CDATA[Data do Contato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="44" width="100" height="20" uuid="d5e08c5c-7ce7-4e29-98a6-955404c0b52a"/>
+				<text><![CDATA[Responsavel pela Os]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="12" y="64" width="251" height="20" uuid="4be67896-8e2c-4d4e-9c03-100979d700f8"/>
+				<textFieldExpression><![CDATA[$F{nomefantasia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="44" width="100" height="20" uuid="42146df7-73b5-4d5f-b1d5-fd534378a221"/>
+				<text><![CDATA[Nome da Empresa]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="279" y="24" width="117" height="20" uuid="f3fde73c-66ae-4f6d-9d66-1afd0ed2d544"/>
+				<textFieldExpression><![CDATA[$F{datainicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="4" width="117" height="20" uuid="0cf7d8a2-df5e-4d9d-ba91-97e5b40e63cf"/>
+				<text><![CDATA[Data do Agendamento]]></text>
+			</staticText>
+			<textField pattern="HH.mm">
+				<reportElement x="415" y="24" width="117" height="20" uuid="a79e8993-ba40-4f0f-9bf3-5d302339b036"/>
+				<textFieldExpression><![CDATA[$F{horainicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="415" y="4" width="117" height="20" uuid="1d5a6921-8153-48d5-866f-f3de8dffec21"/>
+				<text><![CDATA[Hora do Agendamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="44" width="100" height="20" uuid="bd0edc61-74bd-449b-9687-6f96be8800fa"/>
+				<text><![CDATA[Telefone da Empresa]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="279" y="64" width="100" height="20" uuid="330354c6-dbbc-44e8-b727-ba5bcd6fde3e"/>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="0" y="255" width="554" height="183" uuid="c13346c4-8047-41dc-aadd-6a97bab76639"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="140" y="4" width="100" height="20" uuid="d597bd0e-5c60-482c-9802-78ba83d111d7"/>
+				<text><![CDATA[Hora do Contato]]></text>
+			</staticText>
+			<textField pattern="HH.mm">
+				<reportElement x="140" y="24" width="100" height="20" uuid="62414fa3-4adb-43b7-9f60-b154c50b694e"/>
+				<textFieldExpression><![CDATA[$F{horacontato}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="0" y="112" width="554" height="118" uuid="51e0a33f-a5e8-47bf-ba44-648b9e7c7275"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="211" y="88" width="136" height="20" uuid="3bcaf5df-ec99-4836-a14d-0657c93c34cc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição do Problema]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="118" width="113" height="20" uuid="2c9bdf4e-5907-4920-a39d-1e9074696080"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data do Problema:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="125" y="118" width="100" height="20" uuid="be29593a-3a4b-4341-9f5b-078bfb4663f7"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datainicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="138" width="520" height="80" uuid="fe9b3e11-b158-419f-8e4c-9be71da2fb41"/>
+				<textFieldExpression><![CDATA[$F{problema}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="213" y="234" width="136" height="20" uuid="56d3dd70-623d-457f-a815-49dac35c6476"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição do Solução]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="268" width="213" height="20" uuid="2f3698bf-e3c6-4eb2-bca3-1a03c11ab8be"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data do Solução:  ___/___/____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="18" y="454" width="536" height="64" forecolor="#FF0000" backcolor="#FFFFFF" uuid="fbfa89d5-8ad8-461b-9d60-24325718b6b3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[          A Responsabilidade da CORREIA & GOMES INFORMATICA, restringir-se-á ao aplicativo CONTROL, não respondendo por problemas relacionados ao ambiente, como redes, sistemas operacionais, backup de base de dados, Software de gerenciamento de Cartão, Antivírus, montagem e manutenção de equipamentos, backup de certificados digitais etc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="550" width="230" height="17" uuid="a075463d-f6d1-4a51-b165-ea26f1b89c66"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="607" width="230" height="17" uuid="6b7fb28e-2da7-40cd-88eb-796ab655753c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="302" y="550" width="230" height="17" uuid="fed56bb8-1f2e-4622-bc23-9e8d2cc8267d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="607" width="230" height="17" uuid="f3d637f0-68ff-48e6-a50a-22823d7f21f0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="624" width="132" height="20" uuid="f3435a3a-0c9e-48f4-a0b1-d477b0618115"/>
+				<text><![CDATA[Assinatura Téc.Responsável]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="567" width="132" height="20" uuid="fb5cc18e-3348-4766-b63b-efb2995f3645"/>
+				<text><![CDATA[Assinatura Do Resp.Contato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="567" width="132" height="20" uuid="e75d7697-22d4-4c00-9897-5cf7b76a3c7f"/>
+				<text><![CDATA[Assinatura do Solicitante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="624" width="182" height="20" uuid="92566782-8e22-414d-9082-560f3e572999"/>
+				<text><![CDATA[Assinatura Do Analista de Sistemas]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="415" y="64" width="100" height="20" uuid="7713eb1a-a5f1-44f1-9c48-c781b75c3cd1"/>
+				<textFieldExpression><![CDATA[$F{usuarioagendamento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="50"/>
+	</pageFooter>
+</jasperReport>

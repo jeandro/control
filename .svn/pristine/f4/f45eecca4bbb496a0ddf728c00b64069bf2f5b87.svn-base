@@ -1,0 +1,16 @@
+##### Textos do Sistema #####
+PageTitle=Control Sistema de Gest\u00e3o Financeira Integrada V0.01.
+
+##### Textos da P\u00e1gina usuario.xhtml #####
+
+usuario_Title=Listagem de Usu\u00e1rios
+usuario_label_cod=Cod\u00edgo
+usuario_label_nome=Nome
+usuario_label_celular=Celular
+usuario_label_login=Login
+usuario_label_excluir=Excluir
+usuario_link_excluir=Excluir
+usuario_label_alterar=Alterar
+usuario_link_alterar=Alterar
+usuario_btn_novo=Novo Cadastro
+

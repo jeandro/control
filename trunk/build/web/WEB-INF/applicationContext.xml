@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+   xmlns:b="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans    
+                            http://www.springframework.org/schema/beans/spring-beans.xsd    
+                            http://www.springframework.org/schema/security    
+                            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+      <!-- 
+    <b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <b:property name="driverClassName" value="org.postgresql.Driver" />
+        <b:property name="url" value="jdbc:postgresql://localhost:5432/gtacompu_control" />
+        <b:property name="username" value="gtacompu_gtacompu" />
+        <b:property name="password" value="jac36984" />
+    </b:bean>   
+   
+  data source   -->
+    <b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <b:property name="driverClassName" value="org.postgresql.Driver" />
+        <b:property name="url" value="jdbc:postgresql://localhost:5432/control" />
+        <b:property name="username" value="postgres" />
+        <b:property name="password" value="postgres" />
+    </b:bean>
+ 
+    <!--
+    <b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <b:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <b:property name="url" value="jdbc:mysql://localhost/gtacompu_control" />
+        <b:property name="username" value="root" />
+        <b:property name="password" value="root" />
+    </b:bean>
+-->
+    <http auto-config="true">
+        <form-login login-page="/publico/login.xhtml" 
+                    authentication-failure-url="/publico/login.xhtml?login_error=1" 
+                    authentication-success-handler-ref="authenticationSuccessHandler" />
+        <intercept-url pattern="/administrador/**" access="ROLE_ADMINISTRADOR" />
+        <intercept-url pattern="/restrito/**" access="ROLE_USUARIO, ROLE_ADMINISTRADOR" />
+        <intercept-url pattern="/publico/template/**" access="ROLE_USUARIO, ROLE_ADMINISTRADOR" />
+        <form-login login-page="/publico/login.xhtml"
+                    always-use-default-target="true"
+                    default-target-url="/restrito/principal.xhtml"
+                    authentication-failure-url="/publico/login.xhtml?login_error=1"/>
+     <!--   <logout logout-success-url="/publico/login.xhtml" /> -->
+     <logout/>
+    </http>
+    
+    <!-- Esse bean é reponsável por redirecionar o usuário logado para sua página principal dependendo do seu TIPO (ROLE) -->
+     <b:bean id="authenticationSuccessHandler" class="br.com.gtacomputadores.control.utils.Redirecionamento" /> 
+<!--        <b:bean id="usuarioDAO" class="br.pesquisapreco.dao.UsuarioDAO" />-->
+    
+    <!-- 
+        Dentro do < authentication-manager > é onde especificamos onde o Spring Security deve buscar os dados para verificar se um usuário está autenticado ou não. 
+        Como já tinhamos previsto desde o começo do post que iríamos fazer a autenticação através do banco de dados, utilizamos a tag < jdbc-user-service-data-source > 
+        passando o dataSource que conecta no banco que contém nossos usuários. Quando o Spring Security tenta autenticar um usuário com dados vindos de um banco de dados ele 
+        possui um padrão: para cada usuário devem ser retornados 3 campos: username, password e enable, sendo eles usuário, senha e o último dizendo se o usuário está habilitado ou não.
+        Para não ficarmos presos no padrão de tabelas que o Spring Security sugere para usuários, nós podemos escrever quais querys ele irá utilizar para recuperar os dados que ele precisa.
+        O atributo users-by-username-query deve trazer os dados do usuário (username, password e enabled) selecionado pelo nome de usuário e o atributo authorities-by-username-query 
+        deve trazer o nome de usuário e o tipo de autenticação (username, authority) também selecionado pelo nome de usuário. 
+        Com essa flexibilidade de configuração é possível utilizar qualquer estrutura de tabelas responsável por armazenar os usuários.
+        
+        Mudar o prefixo do tipo de autorização. Para mudar o prefixo padrão (ROLE_) podemos setar o atributo role-prefix da tag < jdbc-user-service-data-source >.
+    -->
+    <authentication-manager>
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="SELECT login, senha, 'true' as enable FROM usuario WHERE login=?" 
+                               authorities-by-username-query="SELECT login, permissao FROM usuario WHERE login=?" />
+        </authentication-provider>
+        <!--         <authentication-provider user-service-ref="usuarioDAO">
+        </authentication-provider> -->
+    </authentication-manager> 
+</b:beans>

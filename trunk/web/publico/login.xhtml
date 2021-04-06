@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        
+     <title>Control Sistema de Gestão Financeira Integrada</title> 
+        <h:outputStylesheet library="css" name="bootstrap.css"/>  
+        <h:outputStylesheet library="css" name="template.css"/>  
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputScript name="maiusculo-minusculo.js" library="js"></h:outputScript>
+    </h:head>
+
+    <!-- 
+        Mas agora você deve estar se perguntando... porque não usar o form do próprio JSF e o 
+        commandButton no lugar do input? Então, pelos testes que eu fiz, não é possível usar o 
+        form e o commandButton do JSF, ele acaba não funcionando direito, e olha que não foi 
+        por falta de testes... 
+        Mas vamos entender algumas coisinhas.. como já falei, precisamos usar o form e o input 
+        do próprio HTML, outras coisas são de extrema importância para o funcionamento, a action 
+        do form precisa ser a servlet j_spring_security_check, assim como os id's dos campos precisam 
+        ser j_username e j_passsword ... se eu não me engano quando usa-se o Spring Security de 
+        forma personalizada (daria uma longa postagem) tem como usar outros id's, mas não é o nosso foco hoje.
+    -->
+
+    <h:body styleClass="site com_login view-login layout-default task- itemid-">
+        <div class="container">
+            <div id="content">
+                <div id="element-box" class="login well">
+                    <h:graphicImage library="imagens" name="login_img.gif" />
+                    <hr />
+                    <h:panelGroup layout="block" rendered="#{!empty param.login_error}">
+                        <span style="color: red">
+                            Erro ao efetuar o login.
+                        </span>
+                        <br />
+                        Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+                    </h:panelGroup>
+                    <form id="login" method="post" action="#{request.contextPath}/j_spring_security_check">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Usuário" style="height: 25px"/>
+                            <input type="text" name="j_username" style="height: 25px; width: 170px" onkeyup="up(this)" />
+                            <br/>
+                            <p style="margin-top: 10px"></p>
+                            <h:outputLabel value="Senha" style="height: 25px" />
+                            <input type="password" name="j_password" style="height: 25px; width: 170px" onkeyup="up(this)"/>
+                            <h:panelGroup>
+                                <div align="center">
+                                    <input type="submit" value="Entrar"/>
+                                </div>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

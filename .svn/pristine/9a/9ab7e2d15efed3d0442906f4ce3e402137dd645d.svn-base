@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+    <ui:composition template="/publico/templates/principal.xhtml">
+
+        <ui:define name="titulo">
+            #{msgs.PageTitle}
+        </ui:define>
+        <ui:define name="corpo">      
+            <h:form>  
+                <h:outputLabel value="Numero da Os: "/>
+                <h:outputLabel value="#{agendaBean.agenda.codigo}" style="color: red; font-weight:bold;"/>
+
+                <p:panelGrid id="eventDetails" columns="4" style=" width: 770px;"> 
+
+                    <f:facet name="header">
+                        Informações do Compromisso
+                    </f:facet>
+                    <h:outputLabel for="infaccliente" value="Cliente:"/> 
+                    <p:selectOneMenu id="infaccliente" value="#{agendaBean.agenda.clienteagenda}" disabled="true">
+                        <f:selectItem itemLabel="Selecione um Cliente" itemValue="" /> 
+                        <f:selectItems value="#{clienteBean.listarClientes}"
+                                       var="cli" 
+                                       itemLabel="#{cli.nomeFantasia}"
+                                       itemValue="#{cli}"/>
+                    </p:selectOneMenu>
+
+
+                    <h:outputLabel for="infacresponsavel" value="Responsavel:"/>
+                    <p:selectOneMenu id="infacresponsavel" value="#{agendaBean.agenda.usuarioagenda}" disabled="true">
+                        <f:selectItem itemLabel="Selecione um Responsavel" itemValue="" /> 
+                        <f:selectItems value="#{usuarioBean.usuarios}"
+                                       var="user" 
+                                       itemLabel="#{user.nome}"
+                                       itemValue="#{user}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="infDinicio" value="Data Inicio:" />  
+                    <p:calendar id="infDinicio" value="#{agendaBean.agenda.dataInicio}" pattern="dd/MM/yyy" disabled="true">  
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" />  
+                    </p:calendar> 
+
+                    <h:outputLabel for="infDfim" value="Data Fim:" />  
+                    <p:calendar id="infDfim" value="#{agendaBean.agenda.dataFim}" pattern="dd/MM/yyy" disabled="true">  
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" /> 
+                    </p:calendar>
+
+
+
+                    <h:outputLabel for="infHinicio" value="Hora Inicio:" />                     
+                    <p:calendar id="infHinicio" value="#{agendaBean.agenda.horaInicio}" pattern="HH:mm" timeOnly="true" disabled="true"/> 
+
+
+                    <h:outputLabel for="infHfim" value="Hora Fim:" />            
+                    <p:calendar id="infHfim" value="#{agendaBean.agenda.horaFim}" pattern="HH:mm" timeOnly="true" disabled="true"/>
+
+
+
+                    <h:outputLabel for="infproblema" value="Problema:" />  
+                    <p:inputTextarea id="infproblema" rows="6" cols="33" value="#{agendaBean.agenda.problema}" onkeyup="up(this)" disabled="true"/>  
+
+                    <h:outputLabel for="infSolucao" value="Solução:" />  
+                    <p:inputTextarea id="infSolucao" rows="6" cols="33" value="#{agendaBean.agenda.solucao}" onkeyup="up(this)" disabled="true"/>  
+
+                    <h:outputLabel for="infDcontato" value="Data Contato:" />  
+                    <p:calendar id="infDcontato" value="#{agendaBean.agenda.dataContato}" pattern="dd/MM/yyy" disabled="true">  
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" />   
+                    </p:calendar>
+
+                    <h:outputLabel for="infHcontato" value="Hora Contato:" />            
+                    <p:calendar id="infHcontato" value="#{agendaBean.agenda.horaContato}" pattern="HH:mm" timeOnly="true"  disabled="true"/>
+
+                    <h:outputLabel for="infdescrcontato" value="Contato:" />  
+                    <p:inputTextarea id="infdescrcontato" rows="6" cols="33" value="#{agendaBean.agenda.contato}" onkeyup="up(this)" disabled="true" />  
+
+                    <h:outputLabel for="infstatus" value="Status:" /> 
+                    <p:inputText id="infstatus" value="#{agendaBean.agenda.status}" disabled="true"/>
+
+                    <h:outputLabel for="infacavaliacao" value="Avaliação:"/> 
+                    <p:selectOneMenu id="infacavaliacao" value="#{agendaBean.agenda.avaliacaodoatendimento}" disabled="true">
+                        <f:selectItem itemLabel="Selecione a Avaliação" itemValue=""/> 
+                        <f:selectItems value="#{avaliacaoBean.todosTiposAvaliacao}"
+                                       var="ava" 
+                                       itemLabel="#{avaliacaoBean.setTipoAvaliacao(tipoAvaliacao)}"
+                                       itemValue="#{ava}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="infAvaliacao" value="Obs Final:" />  
+                    <p:inputTextarea id="infAvaliacao" rows="6" cols="33" value="#{agendaBean.agenda.obsavaliacaodoatendimento}" onkeyup="up(this)" disabled="true"/> 
+
+
+                </p:panelGrid> 
+                <p:panelGrid columns="4" style=" width: 770px;">
+                      <!-- --> 
+                    <h:outputLabel value="Responsavel pela Impressão: "/>
+                    <p:outputLabel value="#{agendaBean.agenda.usuarioimpresao}" style="color: red; font-weight:bold;"/>
+
+                    <!-- --> 
+                    <h:outputLabel value="Data e Hora da Impressão: "/>
+                    <p:calendar  id="data_hora_usuarioimpressao" value="#{agendaBean.agenda.data_hora_usuarioimpresao}"  pattern="dd/MM/yyyy HH:mm:ss" disabled="true"/>
+
+                    
+                    <h:outputLabel value="Responsavel pelo Agendamento: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuarioagendamento}" style="color: red; font-weight:bold;"/>
+                    <h:outputLabel value="Data e Hora do Agendamento: "/>
+                    <p:calendar  id="data_hora_usuarioagendamento" value="#{agendaBean.agenda.data_hora_usuarioagendamento}"  pattern="dd/MM/yyyy HH:mm:ss" disabled="true"/>
+
+                    <h:outputLabel value="Responsavel pelo Fechamento: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuariofechamento}" style="color: red; font-weight:bold;"/> 
+                    <h:outputLabel value="Data e Hora do Fechamento: "/>
+                    <p:calendar  id="data_hora_usuariofechamento" value="#{agendaBean.agenda.data_hora_usuariofechamento}"  pattern="dd/MM/yyyy HH:mm:ss" disabled="true"/>
+
+                    <h:outputLabel value="Responsavel pelo Contato: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuariocontato}" style="color: red; font-weight:bold;"/>
+                    <h:outputLabel value="Data e Hora do Contato: "/>
+                    <p:calendar  id="data_hora_usuariocotato" value="#{agendaBean.agenda.data_hora_usuariocontato}"  pattern="dd/MM/yyyy HH:mm:ss" disabled="true"/>
+
+                    <h:outputLabel value="Responsavel pelo Protocolo: "/>
+                    <h:outputLabel value="#{agendaBean.agenda.usuarioprotocolo}" style="color: red; font-weight:bold;"/>
+                    <h:outputLabel value="Data e Hora do Protocolo: "/>
+                    <p:calendar  id="data_hora_protocolo" value="#{agendaBean.agenda.data_hora_usuarioprotocolo}"   pattern="dd/MM/yyyy HH:mm:ss" disabled="true"/>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>
+
+

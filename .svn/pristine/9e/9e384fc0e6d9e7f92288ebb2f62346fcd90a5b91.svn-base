@@ -1,0 +1,154 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.gtacomputadores.control.utils;
+
+import br.com.gtacomputadores.control.model.Agenda;
+import java.text.Normalizer;
+import org.jsoup.Jsoup;
+import java.io.IOException;
+import org.jsoup.nodes.Document;
+
+
+/**
+ *
+ * @author Jeandro
+ */
+public class TextoUtil {
+
+    /**
+     * Remove os acentos do texto informado
+     *
+     * @param texto
+     * @return
+     */
+    public static String removerAcentos(String texto) {
+        if (texto != null) {
+            texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
+            texto = texto.replaceAll("[^\\p{ASCII}]", "");
+        }
+        return texto;
+    }
+
+    /**
+     * Le arquivo html e retorna uma srting
+     *
+     *
+     *
+     */
+    public static String lehtml(String uriStr) {
+        TextoUtil jrf = new TextoUtil();
+        Document doc;
+        String X;
+        X = "";
+        try {
+            //pegando arquivos da pasta resources
+            doc = Jsoup.connect(uriStr).get();
+            X = doc.html();
+            System.out.println(doc);
+        } catch (IOException e) {
+        }
+        return X;
+    }
+
+    public String MontaEmail(Agenda agenda) {
+        String Texto = null;
+        Texto = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
+"<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+"<head>\n" +
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" +
+"</head>\n" +
+"<body>\n" +
+"<img src=\"http://www.gtasistemas.com.br/crm.jpg\" align=\"middle\" /> \n" +
+"<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\">\n" +
+"  <tr>\n" +
+"    <td width=\"100%\" bgcolor=\"#99CCCC\"><p align=\"justify\"><strong>Prezado Cliente  "+ agenda.getClienteagenda().getNomeFantasia() + "</strong></p>\n" +
+"    <p align=\"justify\"><strong>Esta e uma mensagem automática feita pelo nosso Sistema de Atendimento ao Consumidor 'SAC', com ela você pode verificar o "
+                + "andamento do seu atendimento através dos telefones (64) 3471-1654 e (64) 9268-5956.</strong>.</p></td>\n" +
+"  </tr>\n" +
+"</table>\n" +
+"\n" +
+"<table border=\"0\" cellspacing=\"1\" cellpadding=\"0\" width=\"100%\">\n" +
+"  <tr>\n" +
+"  <td width=\"100%\" bgcolor=\"#CCCCCC\"><p align=\"center\"><strong>PROTOCOLO  DE ATENDIMENTO - " + agenda.getCodigo().toString() +" </strong></p></td>\n" +
+"  </tr>\n" +
+"</table>\n" +
+"<table border=\"0\" cellspacing=\"1\" cellpadding=\"0\" width=\"100%\">\n" +
+"  <tr>\n" +
+"    <td width=\"50%\"bgcolor=\"#CCCCCC\"><div align=\"center\"><strong>Data de Agendamento</strong></div></td>\n" +
+"    <td width=\"50%\"bgcolor=\"#CCCCCC\"><div align=\"center\"><strong>Hora de Agendamento</strong></div></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td width=\"50%\"bgcolor=\"#FFFFFF\">" + agenda.getDataInicio_String()+"</td>\n" +
+"    <td width=\"50%\"bgcolor=\"#FFFFFF\">" + agenda.getHoraInicio_String() +"</td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td width=\"50%\" bgcolor=\"#CCCCCC\"><p align=\"center\"><strong>Responsável Pelo Contato</strong></p></td>\n" +
+"    <td width=\"50%\" bgcolor=\"#CCCCCC\"><p align=\"center\"><strong>Empresa </strong></p></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td width=\"50%\"<p>" + agenda.getUsuarioagendamento() + "</p></td>\n" +
+"    <td width=\"50%\"<p>" + agenda.getClienteagenda().getNomeFantasia() + "</p></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td width=\"50%\" bgcolor=\"#CCCCCC\"><p align=\"center\"><strong>Problema</strong></p></td>\n" +
+"    <td width=\"50%\" bgcolor=\"#CCCCCC\"><p align=\"center\"><strong>Solução</strong></p></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td width=\"50%\"<p>" + agenda.getProblema() + "</p></td>\n" +
+"    <td width=\"50%\"<p>" + agenda.getSolucao() + "</p></td>\n" +
+"  </tr>\n" +
+"</table>\n" +
+"<table border=\"0\" cellspacing=\"1\" cellpadding=\"0\" width=\"100%\">\n" +
+"  <tr>\n" +
+"    <td width=\"100%\" bgcolor=\"#CCCCCC\"><p align=\"center\"><strong>Status do Atendimento</strong></p></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td height=\"45\"><p>" + agenda.getStatus() + "</p></td>\n" +
+"  </tr>\n" +
+"   <tr>\n" +
+"    <td width=\"100%\" bgcolor=\"#CCCCCC\"><p align=\"center\">&nbsp;</p></td>\n" +
+"  </tr>\n" +
+"</table>\n" +
+"<table border=\"0\" cellspacing=\"1\" cellpadding=\"0\" width=\"100%\">\n" +
+"<tr>\n" +
+"    <td width=\"25%\" bgcolor=\"#CCCCCC\"><div align=\"center\"><strong>Tarefas</strong></div></td>\n" +
+"    <td width=\"25%\" bgcolor=\"#CCCCCC\"><div align=\"center\"><strong>Respónsavel</strong></div></td>\n" +
+"    <td width=\"25%\" bgcolor=\"#CCCCCC\"><div align=\"center\"><strong>Data </strong></div></td>\n" +
+"    <td width=\"25%\" bgcolor=\"#CCCCCC\"><div align=\"center\"><strong>Hora </strong></div></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td bgcolor=\"#FFFFFF\"><strong>Agendamento</strong></td>\n" +
+"    <td bgcolor=\"#FFFFFF\"><strong>" + agenda.getUsuarioagendamento()+"</strong></td>\n" +
+"    <td bgcolor=\"#FFFFFF\"><strong>" + agenda.getDataInicio_String()+"</strong></td>\n" +
+"    <td bgcolor=\"#FFFFFF\"><strong>" + agenda.getHoraInicio_String()+"</strong></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td width=\"25%\"bgcolor=\"#FFFFFF\"><strong>Fechamento</strong></td>\n" +
+"    <td width=\"25%\"bgcolor=\"#FFFFFF\"><strong>" + agenda.getUsuariofechamento()+"</strong></td>\n" +
+"    <td width=\"25%\"bgcolor=\"#FFFFFF\"><p align=\"left\"><strong>" + agenda.getDataFim_String()+"</strong></p></td>\n" +
+"    <td bgcolor=\"#FFFFFF\"><p align=\"left\"><strong>" + agenda.getHoraFim_String()+"</strong></p></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td><strong>Contato</strong></td>\n" +
+"    <td><strong>" + agenda.getUsuariocontato()+"</strong></td>\n" +
+"    <td><strong>" + agenda.getDataContato_String()+"</strong></td>\n" +
+"    <td><strong>" + agenda.getHoraContato_String()+"</strong></td>\n" +
+"  </tr>\n" +
+"  <tr>\n" +
+"    <td height=\"19\" colspan=\"4\" bgcolor=\"#CCCCCC\">&nbsp;</td>\n" +
+"  </tr>\n" +
+"</table>\n" +  
+"<table border=\"0\" cellspacing=\"1\" cellpadding=\"0\" width=\"100%\">\n" +
+"  <tr>\n" +
+"    <td width=\"100%\" bgcolor=\"#99CCCC\"><p align=\"justify\"><strong>A Responsabilidade da CORREIA &amp; GOMES INFORMATICA, restringir-se-á ao aplicativo  CONTROL, não respondendo por problemas relacionados ao ambiente, como redes,  sistemas operacionais, backup de base de dados, Software de gerenciamento de Cartão,  Antivírus, montagem e manutenção de equipamentos, backup de certificados digitais etc.</strong></p></td>\n" +
+"  </tr>\n" +
+"</table>\n" +
+"<p>&nbsp;</p>\n" +
+"</body>\n" +
+"</html>";
+        return Texto;
+    }
+}

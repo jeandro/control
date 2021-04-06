@@ -1,0 +1,79 @@
+body, td, th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+
+}
+
+th {
+	background: url(#{resource['imagens:fundo_claro.png']}); 
+	min-height: 25px;
+	padding: 3px;
+}
+
+img {
+	border:0px;
+}
+
+#container {
+	width: 770px;
+	height: 100%;
+	margin: 0 auto;       
+}
+	
+#titulo {
+	float: left;
+	font-size: 25pt;
+	font-variant: small-caps;
+	font-weight: bold;
+        border:0px;
+}
+
+
+
+#corpo {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	min-height: 300px;
+               
+}
+#menu{
+    border:0px;
+  
+}
+/*#rodape {
+	background: url(#{resource['imagens:fundo_barra_rodape2.png']}) repeat-x;
+	height: 10px;
+	margin-top: 5px;
+	padding: 10px;
+	text-align: center;
+        border-radius: 10px;
+}*/
+
+.info {
+	font-weight: bold;
+	color: green;
+}
+
+.warn {
+	font-weight: bold;
+	color: #FFCC00;
+}
+
+.fatal, .error {
+	font-weight: bold;
+	color: red;
+}
+.semBorda tr, .semBorda td {  
+    border: none !important; 
+    
+
+}  
+.rotulo{
+    width: 100px;
+}
+#panelGrid {
+    font-size: 10px;
+       
+}
+
+

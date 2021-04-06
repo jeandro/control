@@ -1,0 +1,180 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+    <ui:composition template="/publico/templates/principal.xhtml">
+        <ui:define name="titulo">
+            #{msgs.PageTitle}
+        </ui:define>
+        <ui:define name="corpo">      
+
+
+
+            <h:form> 
+                <p:panel>
+                    <p:outputLabel value="Nome Fantasia: " />
+                    <p:inputText value="#{agendaPesquisaBean.dao.filtro}" onkeyup="up(this)" >
+                    </p:inputText>
+                    <span/>
+                    <p:commandButton  value="Pesquisar" style="margin:0" icon="ui-icon-search">
+                        <f:ajax execute="@form" render="@form" />
+                        </p:commandButton>
+                </p:panel>
+                <br/>
+
+                <p:panelGrid id="pesquisa" columns="4" style=" width: 770px;"> 
+
+                    <f:facet name="header">
+                        Pesquisa
+                    </f:facet>
+
+                </p:panelGrid> 
+
+                <p:dataTable value="#{agendaPesquisaBean.listarAgendas2}" var="agenda" rowKey="#{agenda.codigo}" 
+                             selectionMode="single" style="height: 390px; width: 770px;" id="tabela" paginator="true" 
+                             rows="10">
+                    <f:ajax execute="@form" render="@form" event="rowUnselect"/>
+                    <p:column headerText="Os">
+                        <h:outputText value="#{agenda.codigo}" />
+                    </p:column>
+                    <p:column headerText="Data"> 
+                        <h:outputText value="#{agenda.dataInicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Hora">
+                        <h:outputText value="#{agenda.horaInicio}">
+                            <f:convertDateTime pattern="HH:mm" type="time" 
+                                               dateStyle="short" timeZone="GMT-3" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{agenda.clienteagenda.nomeFantasia}" style="uppercase"/>
+                    </p:column>
+                    <p:column headerText="Responsavel">
+                        <h:outputText value="#{agenda.usuarioagenda.login}" />
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{agenda.status}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+
+
+
+                        <h:commandLink action="#{agendaPesquisaBean.setarpesquisa()}" title="Informações Completas" >
+                            <h:graphicImage library="imagens" name="lupa.png"/>
+                            <f:setPropertyActionListener target="#{agendaPesquisaBean.agenda}" value="#{agenda}" />
+                        </h:commandLink>
+
+
+
+                    </p:column>
+                </p:dataTable>
+
+            </h:form>
+
+            <p:dialog id="resumo" header="Resumo do Compromisso" widgetVar="dlg1"  height="480" > 
+                <h:form>  
+                    <h:outputLabel value="Numero da Os: "/>
+                    <h:outputLabel value="#{agendaPesquisaBean.agenda.codigo}" style="color: red; font-weight:bold;"/>
+
+                    <p:panelGrid id="eventDetails" columns="4" style=" width: 300px;"> 
+
+                        <f:facet name="header">
+                            Informações do Compromisso
+                        </f:facet>
+                        <h:outputLabel for="infaccliente" value="Cliente:"/> 
+                        <p:selectOneMenu id="infaccliente" value="#{agendaPesquisaBean.agenda.clienteagenda}" >
+                            <f:selectItem itemLabel="Selecione um Cliente" itemValue="" /> 
+                            <f:selectItems value="#{clienteBean.listarClientes}"
+                                           var="cli" 
+                                           itemLabel="#{cli.nomeFantasia}"
+                                           itemValue="#{cli}"/>
+                        </p:selectOneMenu>
+
+
+                        <h:outputLabel for="infacresponsavel" value="Responsavel:"/>
+                        <p:selectOneMenu id="infacresponsavel" value="#{agendaPesquisaBean.agenda.usuarioagenda}">
+                            <f:selectItem itemLabel="Selecione um Responsavel" itemValue="" /> 
+                            <f:selectItems value="#{usuarioBean.usuarios}"
+                                           var="user" 
+                                           itemLabel="#{user.nome}"
+                                           itemValue="#{user}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="infDinicio" value="Data Inicio:" />  
+                        <p:calendar id="infDinicio" value="#{agendaPesquisaBean.agenda.dataInicio}" pattern="dd/MM/yyy" disabled="true">  
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" />  
+                        </p:calendar> 
+
+                        <h:outputLabel for="infDfim" value="Data Fim:" />  
+                        <p:calendar id="infDfim" value="#{agendaPesquisaBean.agenda.dataFim}" pattern="dd/MM/yyy">  
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" /> 
+                        </p:calendar>
+
+
+
+                        <h:outputLabel for="infHinicio" value="Hora Inicio:" />                     
+                        <p:calendar id="infHinicio" value="#{agendaPesquisaBean.agenda.horaInicio}" pattern="HH:mm" timeOnly="true" disabled="true"/> 
+
+
+                        <h:outputLabel for="infHfim" value="Hora Fim:" />            
+                        <p:calendar id="infHfim" value="#{agendaPesquisaBean.agenda.horaFim}" pattern="HH:mm" timeOnly="true" />
+
+
+
+                        <h:outputLabel for="infproblema" value="Problema:" />  
+                        <p:inputTextarea id="infproblema" rows="6" cols="33" value="#{agendaPesquisaBean.agenda.problema}" onkeyup="up(this)" />  
+
+                        <h:outputLabel for="infSolucao" value="Solução:" />  
+                        <p:inputTextarea id="infSolucao" rows="6" cols="33" value="#{agendaPesquisaBean.agenda.solucao}" onkeyup="up(this)"/>  
+
+                        <h:outputLabel for="infDcontato" value="Data Contato:" />  
+                        <p:calendar id="infDcontato" value="#{agendaPesquisaBean.agenda.dataContato}" pattern="dd/MM/yyy" >  
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" />   
+                        </p:calendar>
+
+                        <h:outputLabel for="infHcontato" value="Hora Contato:" />            
+                        <p:calendar id="infHcontato" value="#{agendaPesquisaBean.agenda.horaContato}" pattern="HH:mm" timeOnly="true"  />
+
+                        <h:outputLabel for="infdescrcontato" value="Contato:" />  
+                        <p:inputTextarea id="infdescrcontato" rows="6" cols="33" value="#{agendaPesquisaBean.agenda.contato}" onkeyup="up(this)" />  
+
+                        <h:outputLabel for="infstatus" value="Status:" /> 
+                        <p:inputText id="infstatus" value="#{agendaPesquisaBean.agenda.status}"/>
+                        
+                            <h:outputLabel for="infacavaliacao" value="Avaliação do Atendimento:"/> 
+                    <p:selectOneMenu id="infacavaliacao" value="#{agendaBean.agenda.avaliacaodoatendimento}"
+                                     required="true" requiredMessage="Informe a Avaliação do Atendimento">
+                        <f:selectItem itemLabel="Selecione a Avaliação" itemValue=""/> 
+                        <f:selectItems value="#{avaliacaoBean.todosTiposAvaliacao}"
+                                       var="ava" 
+                                       itemLabel="#{avaliacaoBean.setTipoAvaliacao(tipoAvaliacao)}"
+                                       itemValue="#{ava}"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel for="infAvaliacao" value="Observação do Atendimento:" />  
+                    <p:inputTextarea id="infAvaliacao" rows="6" cols="33" value="#{agendaBean.agenda.obsavaliacaodoatendimento}" onkeyup="up(this)"/> 
+
+
+                    </p:panelGrid> 
+                    <h:outputLabel value="Responsavel pelo Agendamento: "/>
+                    <h:outputLabel value="#{agendaPesquisaBean.agenda.usuarioagendamento}" style="color: red; font-weight:bold;"/>
+                    <br/> 
+                    <h:outputLabel value="Responsavel pelo Fechamento: "/>
+                    <h:outputLabel value="#{agendaPesquisaBean.agenda.usuariofechamento}" style="color: red; font-weight:bold;"/>
+                    <br/> 
+                    <h:outputLabel value="Responsavel pelo Contato: "/>
+                    <h:outputLabel value="#{agendaPesquisaBean.agenda.usuariocontato}" style="color: red; font-weight:bold;"/>
+
+
+                </h:form>
+            </p:dialog>
+
+
+        </ui:define>
+    </ui:composition>
+</html>

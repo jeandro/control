@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    
+    <context-param> 
+        <param-name>primefaces.THEME</param-name> 
+        <param-value>start</param-value> 
+    </context-param> 
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>  <!-- Habilitar os comentários em JSF -->
+    <context-param>  
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>  
+        <param-value>true</param-value>  
+    </context-param> 
+    
+    <resource-ref>
+        <res-ref-name>jdbc/control</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+    <!-- Início das configurações para o Spring Security 3 -->  
+        
+    <!--Para concluir esta etapa basta fazer uma pequena modificação no web.xml para adicionar um listener que o Spring tem para facilitar nossa vida. Sempre que a aplicação vai começar a funcionar esse listener procura pelo arquivo applicationContext.xml e carrega o Spring e os beans e configurações definidos nesse arquivo.-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <!--Primeiro de tudo vamos adicionar um novo filtro no nosso web.xml. Esse filtro será responsável por interceptar todas as requisições à aplicacão, verificar se o usuário possui acesso e liberar a requisição normalmente ou então mostrar um erro.-->  
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--A partir de agora todas as requisições serão interceptadas pelo Spring, só falta deixar bem claro para o Spring Security quem pode fazer o que na aplicação.-->
+    
+    <!-- Fim das configuração para utilizar o Spring Security 3 -->
+    
+    
+    <!-- Configurações para juntar todas as transações numa mesma sessão para o HIBERNATE-->
+    <!--    <filter>
+        <filter-name>openEntityManagerInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+        <init-param>
+            <param-name>entityManagerFactoryBeanName</param-name>
+            <param-value>entityManagerFactory</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>openEntityManagerInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+    <!-- Fim das configuração para utilizar o Spring Security 3 -->
+
+</web-app>
+

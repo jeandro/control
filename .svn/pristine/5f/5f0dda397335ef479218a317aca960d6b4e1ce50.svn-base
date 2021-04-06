@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a372a091-b21a-4693-a8c3-de2cde052c49">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     agenda."codigo" AS agenda_codigo,
+     agenda."contato" AS agenda_contato,
+     agenda."datacontato" AS agenda_datacontato,
+     agenda."datafim" AS agenda_datafim,
+     agenda."datainicio" AS agenda_datainicio,
+     agenda."horacontato" AS agenda_horacontato,
+     agenda."horafim" AS agenda_horafim,
+     agenda."horainicio" AS agenda_horainicio,
+     agenda."problema" AS agenda_problema,
+     agenda."solucao" AS agenda_solucao,
+     agenda."status" AS agenda_status,
+     agenda."idcliente" AS agenda_idcliente,
+     agenda."idresponsavel" AS agenda_idresponsavel,
+     agenda."usuarioagendamento" AS agenda_usuarioagendamento,
+     agenda."usuariocontato" AS agenda_usuariocontato,
+     agenda."usuariofechamento" AS agenda_usuariofechamento,
+     agenda."avaliacaodoatendimento" AS agenda_avaliacaodoatendimento,
+     agenda."data_hora_usuarioagendamento" AS agenda_data_hora_usuarioagendamento,
+     agenda."data_hora_usuariocontato" AS agenda_data_hora_usuariocontato,
+     agenda."data_hora_usuariofechamento" AS agenda_data_hora_usuariofechamento,
+     agenda."data_hora_usuarioprotocolo" AS agenda_data_hora_usuarioprotocolo,
+     agenda."obsavaliacaodoatendimento" AS agenda_obsavaliacaodoatendimento,
+     agenda."usuarioavaliacaoatendimento" AS agenda_usuarioavaliacaoatendimento,
+     agenda."usuarioprotocolo" AS agenda_usuarioprotocolo,
+     cliente."codigo" AS cliente_codigo,
+     cliente."chave" AS cliente_chave,
+     cliente."celular" AS cliente_celular,
+     cliente."celularresponsavel" AS cliente_celularresponsavel,
+     cliente."cep" AS cliente_cep,
+     cliente."cnpj" AS cliente_cnpj,
+     cliente."complemento" AS cliente_complemento,
+     cliente."contador" AS cliente_contador,
+     cliente."cpfresponsavel" AS cliente_cpfresponsavel,
+     cliente."datainicio" AS cliente_datainicio,
+     cliente."datavencimentocertificado" AS cliente_datavencimentocertificado,
+     cliente."diapagamento" AS cliente_diapagamento,
+     cliente."email" AS cliente_email,
+     cliente."endereco" AS cliente_endereco,
+     cliente."inscricao" AS cliente_inscricao,
+     cliente."nomefantasia" AS cliente_nomefantasia,
+     cliente."nomeresponsavel" AS cliente_nomeresponsavel,
+     cliente."razao" AS cliente_razao,
+     cliente."telefone" AS cliente_telefone,
+     cliente."idcidade" AS cliente_idcidade,
+     usuario."codigo" AS usuario_codigo,
+     usuario."ativo" AS usuario_ativo,
+     usuario."celular" AS usuario_celular,
+     usuario."email" AS usuario_email,
+     usuario."login" AS usuario_login,
+     usuario."nascimento" AS usuario_nascimento,
+     usuario."nome" AS usuario_nome,
+     usuario."permissao" AS usuario_permissao,
+     usuario."senha" AS usuario_senha
+FROM
+     "public"."cliente" cliente INNER JOIN "public"."agenda" agenda ON cliente."codigo" = agenda."idcliente"
+     INNER JOIN "public"."usuario" usuario ON agenda."idresponsavel" = usuario."codigo"
+
+]]>
+	</queryString>
+	<field name="agenda_codigo" class="java.lang.Integer"/>
+	<field name="agenda_contato" class="java.lang.String"/>
+	<field name="agenda_datacontato" class="java.sql.Date"/>
+	<field name="agenda_datafim" class="java.sql.Date"/>
+	<field name="agenda_datainicio" class="java.sql.Date"/>
+	<field name="agenda_horacontato" class="java.sql.Time"/>
+	<field name="agenda_horafim" class="java.sql.Time"/>
+	<field name="agenda_horainicio" class="java.sql.Time"/>
+	<field name="agenda_problema" class="java.lang.String"/>
+	<field name="agenda_solucao" class="java.lang.String"/>
+	<field name="agenda_status" class="java.lang.String"/>
+	<field name="agenda_idcliente" class="java.lang.Integer"/>
+	<field name="agenda_idresponsavel" class="java.lang.Integer"/>
+	<field name="agenda_usuarioagendamento" class="java.lang.String"/>
+	<field name="agenda_usuariocontato" class="java.lang.String"/>
+	<field name="agenda_usuariofechamento" class="java.lang.String"/>
+	<field name="agenda_avaliacaodoatendimento" class="java.lang.String"/>
+	<field name="agenda_data_hora_usuarioagendamento" class="java.sql.Timestamp"/>
+	<field name="agenda_data_hora_usuariocontato" class="java.sql.Timestamp"/>
+	<field name="agenda_data_hora_usuariofechamento" class="java.sql.Timestamp"/>
+	<field name="agenda_data_hora_usuarioprotocolo" class="java.sql.Timestamp"/>
+	<field name="agenda_obsavaliacaodoatendimento" class="java.lang.String"/>
+	<field name="agenda_usuarioavaliacaoatendimento" class="java.lang.String"/>
+	<field name="agenda_usuarioprotocolo" class="java.lang.String"/>
+	<field name="cliente_codigo" class="java.lang.Integer"/>
+	<field name="cliente_chave" class="java.lang.String"/>
+	<field name="cliente_celular" class="java.lang.String"/>
+	<field name="cliente_celularresponsavel" class="java.lang.String"/>
+	<field name="cliente_cep" class="java.lang.String"/>
+	<field name="cliente_cnpj" class="java.lang.String"/>
+	<field name="cliente_complemento" class="java.lang.String"/>
+	<field name="cliente_contador" class="java.lang.String"/>
+	<field name="cliente_cpfresponsavel" class="java.lang.String"/>
+	<field name="cliente_datainicio" class="java.sql.Date"/>
+	<field name="cliente_datavencimentocertificado" class="java.sql.Date"/>
+	<field name="cliente_diapagamento" class="java.lang.Integer"/>
+	<field name="cliente_email" class="java.lang.String"/>
+	<field name="cliente_endereco" class="java.lang.String"/>
+	<field name="cliente_inscricao" class="java.lang.String"/>
+	<field name="cliente_nomefantasia" class="java.lang.String"/>
+	<field name="cliente_nomeresponsavel" class="java.lang.String"/>
+	<field name="cliente_razao" class="java.lang.String"/>
+	<field name="cliente_telefone" class="java.lang.String"/>
+	<field name="cliente_idcidade" class="java.lang.Integer"/>
+	<field name="usuario_codigo" class="java.lang.Integer"/>
+	<field name="usuario_ativo" class="java.lang.Boolean"/>
+	<field name="usuario_celular" class="java.lang.String"/>
+	<field name="usuario_email" class="java.lang.String"/>
+	<field name="usuario_login" class="java.lang.String"/>
+	<field name="usuario_nascimento" class="java.sql.Date"/>
+	<field name="usuario_nome" class="java.lang.String"/>
+	<field name="usuario_permissao" class="java.lang.String"/>
+	<field name="usuario_senha" class="java.lang.String"/>
+	<filterExpression><![CDATA[$F{codigo} = $P{PROTOCOLO}]]></filterExpression>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="21" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="12" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
